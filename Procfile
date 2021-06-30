@@ -1,1 +1,1 @@
-gunicorn hello:app taskify.wsgi.application
+web: gunicorn taskify.wsgi.application
