@@ -35,7 +35,7 @@ class DeleteTaskMutation(graphene.Mutation):
 class UpdateTaskMutation(graphene.Mutation):
     class Arguments:
         taskId = graphene.ID(required=True)
-        name = graphene.String(required=True)
+        name = graphene.String()
         complete = graphene.Boolean()
 
     task = graphene.Field(TaskType)
