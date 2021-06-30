@@ -8,7 +8,7 @@ from GraphQL.types import TaskType
 class Query(graphene.ObjectType):
 
     tasks =  graphene.List(TaskType)
-    task =  graphene.Field(TaskType, taskId=graphene.Int(required=True))
+    task =  graphene.Field(TaskType, taskId=graphene.ID(required=True))
 
     def resolve_tasks(root, info):
         return TaskModel.objects.all()
