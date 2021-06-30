@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import django_heroku
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -79,10 +81,16 @@ WSGI_APPLICATION = 'taskify.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# postgres://qrhbmrtxqyemje:cd792ec158515a6f493e73fb45d303da2e96ef82447e6429182fc2f9e0769f2c@ec2-3-214-136-47.compute-1.amazonaws.com:5432/d57u5a7d0e61p3
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd57u5a7d0e61p3',
+        'HOST': 'ec2-3-214-136-47.compute-1.amazonaws.com',
+        'USER': 'qrhbmrtxqyemje',
+        'PASSWORD': 'cd792ec158515a6f493e73fb45d303da2e96ef82447e6429182fc2f9e0769f2c',
+        'PORT': 5432
     }
 }
 
@@ -135,3 +143,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 GRAPHENE = {
     "SCHEMA": "GraphQL.schemas.schema"
 }
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
