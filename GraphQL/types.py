@@ -7,4 +7,4 @@ from tasks.models import TaskModel
 class TaskType(DjangoObjectType):
     class Meta:
         model = TaskModel
-        fields = ('name', 'created', 'complete',)
+        fields = ('name', 'created', 'complete', 'id',)
