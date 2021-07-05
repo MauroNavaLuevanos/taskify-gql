@@ -35,13 +35,13 @@ class DeleteTaskMutation(graphene.Mutation):
 class UpdateTaskMutation(graphene.Mutation):
     class Arguments:
         taskId = graphene.ID(required=True)
-        name = graphene.String()
-        complete = graphene.Boolean()
+        name = graphene.String(required=False)
+        complete = graphene.Boolean(required=False)
 
     task = graphene.Field(TaskType)
 
     @classmethod
-    def mutate(cls, root, info, name, taskId, complete):
+    def mutate(cls, root, info, name=None, taskId=None, complete=None):
         task = TaskModel.objects.get(id=taskId)
 
         if name:
