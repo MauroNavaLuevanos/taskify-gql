@@ -11,7 +11,7 @@ class Query(graphene.ObjectType):
     task =  graphene.Field(TaskType, taskId=graphene.ID(required=True))
 
     def resolve_tasks(root, info):
-        return TaskModel.objects.all()
+        return TaskModel.objects.all().order_by('name')
 
     def resolve_task(root, info, taskId):
         return TaskModel.objects.get(id=taskId)
