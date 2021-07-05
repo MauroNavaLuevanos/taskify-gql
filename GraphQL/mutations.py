@@ -43,8 +43,13 @@ class UpdateTaskMutation(graphene.Mutation):
     @classmethod
     def mutate(cls, root, info, name, taskId, complete):
         task = TaskModel.objects.get(id=taskId)
-        task.name = name
-        task.complete = complete
+
+        if name:
+            task.name = name
+
+        if complete != None:
+            task.complete = complete
+
         task.save()
 
         return UpdateTaskMutation(task=task)
