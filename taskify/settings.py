@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Installed,
     'corsheaders',
     'graphene_django',
+    'channels',
 
     # Custom
     'tasks',
@@ -80,6 +81,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'taskify.wsgi.application'
+
+ASGI_APPLICATION = 'taskify.asgi.application'
 
 
 # Database
