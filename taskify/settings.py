@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import django_heroku
+# import django_heroku
 
 from pathlib import Path
 
@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-xzo(felg&e2yur(rr*9z+*bzd8ae1pia^k--3*ap76gjn&u_+&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,16 +41,26 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Installed,
-    'corsheaders',
-    'graphene_django',
     'channels',
+    'graphene_django',
+    'graphene_subscriptions',
 
     # Custom
     'tasks',
 ]
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+GRAPHENE = {
+    "SCHEMA": "taskify.schemas.schema",
+    "SUBSCRIPTION_PATH": "/graphql-ws/"
+}
+
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,9 +68,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000']
 
 ROOT_URLCONF = 'taskify.urls'
 
@@ -139,17 +148,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = BASE_DIR / "static"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-GRAPHENE = {
-    "SCHEMA": "GraphQL.schemas.schema"
-}
-
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

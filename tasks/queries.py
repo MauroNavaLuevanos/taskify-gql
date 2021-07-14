@@ -2,7 +2,7 @@ import graphene
 
 from tasks.models import TaskModel
 
-from GraphQL.types import TaskType
+from tasks.types import TaskType
 
 
 class Query(graphene.ObjectType):

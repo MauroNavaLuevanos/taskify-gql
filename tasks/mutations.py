@@ -1,6 +1,6 @@
 import graphene
 
-from GraphQL.types import TaskType
+from tasks.types import TaskType
 
 from tasks.models import TaskModel
 
@@ -11,9 +11,8 @@ class CreateTaskMutation(graphene.Mutation):
 
     task = graphene.Field(TaskType)
 
-    @classmethod
     def mutate(cls, root, info, name):
-        task = TaskModel.objects.create(name=name)
+        task = TaskModel(name=name)
         task.save()
 
         return CreateTaskMutation(task=task)
@@ -24,7 +23,6 @@ class DeleteTaskMutation(graphene.Mutation):
 
     ok = graphene.Boolean()
 
-    @classmethod
     def mutate(cls, root, info, taskId):
         task = TaskModel.objects.get(id=taskId)
         task.delete()
@@ -40,7 +38,6 @@ class UpdateTaskMutation(graphene.Mutation):
 
     task = graphene.Field(TaskType)
 
-    @classmethod
     def mutate(cls, root, info, taskId, name=None, complete=None):
         task = TaskModel.objects.get(id=taskId)
 
